@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Boadi Phones Storefront"
+description = "A responsive storefront for Boadi Phones + Accessories, with product browsing, a persistent shopping bag, and a mobile-money checkout handoff designed for customers in Kumasi."
+version = "1.0.0"
+id = "artifacts/boadi-phones-storefront"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25070
+
+[services.development]
+run = "pnpm --filter @workspace/boadi-phones-storefront run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/boadi-phones-storefront", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/boadi-phones-storefront/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25070"
+BASE_PATH = "/"
